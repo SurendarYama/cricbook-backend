@@ -1,8 +1,9 @@
 import { defineConfig } from "vite";
 import { VitePluginNode } from "vite-plugin-node";
-
+import envCompatible from "vite-plugin-env-compatible";
 export default defineConfig({
   // ...vite configures
+  envPrefix: "CRICBOOK_APP",
   server: {
     // vite server configs, for details see [vite doc](https://vitejs.dev/config/#server-host)
     port: 3000,
@@ -49,6 +50,7 @@ export default defineConfig({
       // swc configs, see [swc doc](https://swc.rs/docs/configuration/swcrc)
       swcOptions: {},
     }),
+    envCompatible(),
   ],
   optimizeDeps: {
     // Vite does not work well with optionnal dependencies,
@@ -69,6 +71,7 @@ export default defineConfig({
       routes: "/src/routes",
       middleware: "/src/middleware",
       utils: "/src/shared/utils",
+      db: "/src/db",
     },
   },
 });

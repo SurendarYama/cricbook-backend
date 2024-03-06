@@ -16,6 +16,9 @@
     ],
     "@db/*": [
       "db/* "
+    ],
+    "@models/*": [
+      "models/* "
     ]
   },
   "scripts": {

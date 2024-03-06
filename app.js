@@ -1,12 +1,15 @@
 import express from "express";
-import { bootRouter } from "src/router.js";
-import { sequelize } from "db";
 import cors from "cors";
+import { bootRouter } from "src/router.js";
+import { sequelize, syncAllDB } from "db";
+import { models } from "models";
+
 const app = express();
 
 try {
   await sequelize.authenticate();
   console.log("Connection has been established successfully.");
+  syncAllDB(models);
 } catch (error) {
   console.error("Unable to connect to the database:", error);
 }

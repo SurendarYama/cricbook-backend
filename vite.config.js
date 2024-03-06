@@ -72,6 +72,7 @@ export default defineConfig({
       middleware: "/src/middleware",
       utils: "/src/shared/utils",
       db: "/src/db",
+      models: "/src/db/models",
     },
   },
 });

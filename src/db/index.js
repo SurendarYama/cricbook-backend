@@ -12,5 +12,4 @@ export const syncAllDB = async (models) => {
       console.log(err);
     }
   }
-  console.log(`DB is successfully synced...`);
 };

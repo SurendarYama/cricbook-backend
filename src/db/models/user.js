@@ -26,6 +26,14 @@ const User = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    country_dail_code: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    country_code: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     phone_number: {
       type: DataTypes.BIGINT,
       allowNull: false,

@@ -1,18 +1,61 @@
 import express from "express";
-import { User } from "models";
+import bcrypt from "bcrypt";
 const router = express.Router();
+import { User } from "models";
 
 router.post("/login", async (req, res) => {
   try {
-    return res.send(res.body);
+    const { loginId, password } = req.body;
+    if (typeof loginId === "number") {
+      const user = await User.findOne({
+        where: { phone_number: loginId },
+      });
+      if (user) {
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+        if (isPasswordValid) {
+          return res.send({ userId: user.user_id });
+        } else {
+          return res.send({
+            hasError: true,
+            message: "Password is wrong.",
+          });
+        }
+      } else {
+        return res.send({
+          hasError: true,
+          message: "Phone Number is not register",
+        });
+      }
+    } else {
+      const user = await User.findOne({
+        where: { email: loginId },
+      });
+      if (user) {
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+        if (isPasswordValid) {
+          return res.send({ userId: user.user_id });
+        } else {
+          return res.send({
+            hasError: true,
+            message: "Password is wrong.",
+          });
+        }
+      } else {
+        return res.send({ hasError: true, message: "Email is not register" });
+      }
+    }
   } catch (err) {
-    console.log(err);
+    return res.send(err);
   }
 });
 
 router.post("/register", async (req, res) => {
   try {
-    await User.create(req.body);
+    const newUser = {
+      ...req.body,
+      password: bcrypt.hashSync(req.body.password, 10),
+    };
+    await User.create(newUser);
     return res.send({ message: "User registered successfully..." });
   } catch (err) {
     if (err.name === "SequelizeUniqueConstraintError") {
@@ -29,7 +72,6 @@ router.post("/register", async (req, res) => {
           message: "Email is already registered.",
           feildName: "email",
         });
-
       error.message === "phone_number must be unique" &&
         res.send({
           hasError: true,
@@ -38,6 +80,7 @@ router.post("/register", async (req, res) => {
         });
     }
     err.name === "SequelizeDatabaseError" && res.send({ err: "DB error.." });
+    return res.send({ error: err, hasError: true });
   }
 });
 

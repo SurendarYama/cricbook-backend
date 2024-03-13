@@ -7,7 +7,7 @@ export const sequelize = new Sequelize(
 export const syncAllDB = async (models) => {
   for (let i = 0; i < models.length; i++) {
     try {
-      await models[i].sync({ force: true });
+      await models[i].sync();
     } catch (err) {
       console.log(err);
     }

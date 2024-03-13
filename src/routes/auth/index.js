@@ -15,7 +15,29 @@ router.post("/register", async (req, res) => {
     await User.create(req.body);
     return res.send({ message: "User registered successfully..." });
   } catch (err) {
-    return res.send(err);
+    if (err.name === "SequelizeUniqueConstraintError") {
+      const error = err.errors[0];
+      error.message === "username must be unique" &&
+        res.send({
+          hasError: true,
+          message: "Username is already taken.",
+          feildName: "username",
+        });
+      error.message === "email must be unique" &&
+        res.send({
+          hasError: true,
+          message: "Email is already registered.",
+          feildName: "email",
+        });
+
+      error.message === "phone_number must be unique" &&
+        res.send({
+          hasError: true,
+          message: "Phone Number is already registered.",
+          feildName: "phoneNumber",
+        });
+    }
+    err.name === "SequelizeDatabaseError" && res.send({ err: "DB error.." });
   }
 });
 

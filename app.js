@@ -16,10 +16,19 @@ try {
 app.use(express.json()); // for parsing application/json
 app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
+
 // Define the CORS options
 const corsOptions = {
   credentials: true,
-  origin: ["http://localhost:3000"], // Whitelist the domains you want to allow
+  origin: ["http://localhost:3000", "http://localhost:5173"], // Whitelist the domains you want to allow
 };
 app.use(cors(corsOptions));
 // TODO: implement pino.js logger later...

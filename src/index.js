@@ -7,7 +7,7 @@ import { config } from "dotenv";
 
 import { sequelize, syncAllDB } from "./db/index.js";
 import { models } from "./db/models/index.js";
-import { authRouter } from "./routes/index.js";
+import { authRouter, userRouter } from "./routes/index.js";
 
 config();
 const app = express();
@@ -29,6 +29,7 @@ app.use(express.urlencoded({ extended: true })); // for parsing application/x-ww
 
 const baseURL = "/api/v1/";
 app.use(`${baseURL}auth`, authRouter);
+app.use(`${baseURL}user`, userRouter);
 
 // socket.io connection..
 const io = new Server(server, {

@@ -1,7 +1,9 @@
 import { Sequelize } from "sequelize";
+import { config } from "dotenv";
 
+config();
 export const sequelize = new Sequelize(
-  import.meta.env.CRICBOOK_APP_POSTGRESQL_DB_CONNECTION_URL
+  process.env.CRICBOOK_APP_POSTGRESQL_DB_CONNECTION_URL
 );
 
 export const syncAllDB = async (models) => {

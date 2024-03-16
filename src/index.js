@@ -12,7 +12,7 @@ import { authRouter } from "./routes/index.js";
 config();
 const app = express();
 const server = createServer(app);
-const io = new Server(server);
+
 // Define the CORS options
 const corsOptions = {
   credentials: true,
@@ -31,6 +31,12 @@ const baseURL = "/api/v1/";
 app.use(`${baseURL}auth`, authRouter);
 
 // socket.io connection..
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:5173/",
+    methods: ["GET", "POST"],
+  },
+});
 io.on("connection", (socket) => {
   console.log(chalk.bgYellow("User connected to socket.io..."));
 });

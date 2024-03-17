@@ -8,12 +8,12 @@ router.post("/login", async (req, res) => {
     const { loginId, password } = req.body;
     if (typeof loginId === "number") {
       const user = await User.findOne({
-        where: { phone_number: loginId },
+        where: { phoneNumber: loginId },
       });
       if (user) {
         const isPasswordValid = await bcrypt.compare(password, user.password);
         if (isPasswordValid) {
-          return res.send({ userId: user.user_id });
+          return res.send({ userId: user.userId });
         } else {
           return res.send({
             hasError: true,
@@ -33,7 +33,7 @@ router.post("/login", async (req, res) => {
       if (user) {
         const isPasswordValid = await bcrypt.compare(password, user.password);
         if (isPasswordValid) {
-          return res.send({ userId: user.user_id });
+          return res.send({ userId: user.userId });
         } else {
           return res.send({
             hasError: true,

@@ -5,7 +5,7 @@ import { User } from "../../db/models/index.js";
 router.get("/:id", async (req, res) => {
   try {
     const user = await User.findOne({
-      where: { user_id: req.params.id },
+      where: { userId: req.params.id },
     });
     delete user.dataValues.password;
     delete user.dataValues.createdAt;

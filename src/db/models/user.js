@@ -1,10 +1,11 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../index.js";
+import Post from "./post.js";
 
 const User = sequelize.define(
   "user",
   {
-    user_id: {
+    userId: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
@@ -26,15 +27,15 @@ const User = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    country_dail_code: {
+    countryDailCode: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    country_code: {
+    countryCode: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    phone_number: {
+    phoneNumber: {
       type: DataTypes.BIGINT,
       allowNull: false,
       unique: true,
@@ -51,5 +52,11 @@ const User = sequelize.define(
     freezeTableName: true,
   }
 );
+
+User.hasMany(Post, {
+  onDelete: "RESTRICT",
+  onUpdate: "RESTRICT",
+});
+Post.belongsTo(User);
 
 export default User;

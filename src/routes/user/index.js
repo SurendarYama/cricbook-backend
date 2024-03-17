@@ -10,7 +10,7 @@ router.get("/:id", async (req, res) => {
     delete user.dataValues.password;
     delete user.dataValues.createdAt;
     delete user.dataValues.updatedAt;
-    delete user.dataValues.user_id;
+    delete user.dataValues.userId;
     return res.send({ user });
   } catch (err) {
     res.send({ hasError: true, userNotFound: true });

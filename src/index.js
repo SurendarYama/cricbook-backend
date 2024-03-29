@@ -8,7 +8,6 @@ import { config } from "dotenv";
 import { sequelize, syncAllDB } from "./db/index.js";
 import { models } from "./db/models/index.js";
 import { authRouter, userRouter, postRouter } from "./routes/index.js";
-
 config();
 const app = express();
 const server = createServer(app);
